@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "/log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	
+	<appender name="InformationServerAppender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="Append" value="true" />
+		<param name="file" value="logs/TimeTrack.log" />
+		<param name="datePattern" value="'.'yyyy-MM-dd" />
+		<!-- param name="maxFileSize" value="10000KB" />
+		<param name="maxBackupIndex" value="5" /-->
+		
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d{ISO8601} %-5p %c{1}:%L - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="SpringAppender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="Append" value="true" />
+		<param name="file" value="logs/TimeTrack.Spring.log" />
+        <param name="datePattern" value="'.'yyyy-MM-dd" />
+		
+
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d{ISO8601} %-5p [%t] %c{1}:%L - %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="MyConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+    	<param name="target" value="System.out" />
+   	 	<layout class="org.apache.log4j.PatternLayout">
+      		<param name="ConversionPattern"
+            	 value="%-5p [%t]%n  %l%n    %m%n" />
+    	</layout>
+  	</appender>
+
+	<logger name="org.springframework" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="SpringAppender" />
+	</logger>
+	
+	<root>
+		<priority value="DEBUG" />
+		<appender-ref ref="InformationServerAppender" />
+	</root>
+	
+
+</log4j:configuration>

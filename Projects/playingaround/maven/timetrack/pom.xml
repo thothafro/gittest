@@ -1,0 +1,238 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+   <properties>
+  	<catalina.home>/Applications/xampp/tomcat</catalina.home>
+  	<tomcat.manager.url>http:/localhost:8080/manager</tomcat.manager.url>
+  	<tomcat.manager.username>admin</tomcat.manager.username>
+  	<tomcat.manager.password>admin</tomcat.manager.password>
+  	<tomcat.hostname>localhost</tomcat.hostname>
+  	<tomcat.port>8080</tomcat.port>
+  </properties>
+  <groupId>de.thomasfrommeld.timetrack</groupId>
+  <artifactId>timetrack</artifactId>
+  <packaging>war</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>timetrack Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+    	<groupId>org.apache.tiles</groupId>
+    	<artifactId>tiles-core</artifactId>
+    	<version>2.2.1</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.apache.tiles</groupId>
+    	<artifactId>tiles-api</artifactId>
+    	<version>2.2.1</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.apache.tiles</groupId>
+    	<artifactId>tiles-servlet</artifactId>
+    	<version>2.2.1</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.apache.tiles</groupId>
+    	<artifactId>tiles-jsp</artifactId>
+    	<version>2.2.1</version>
+    </dependency>
+    <dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-core</artifactId>
+  		<version>3.0.1.RELEASE</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-web</artifactId>
+  		<version>3.0.1.RELEASE</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-webmvc</artifactId>
+  		<version>3.0.1.RELEASE</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>commons-logging</groupId>
+  		<artifactId>commons-logging</artifactId>
+  		<version>1.1.1</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.slf4j</groupId>
+  		<artifactId>slf4j-log4j12</artifactId>
+  		<version>1.5.2</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>javax.servlet</groupId>
+  		<artifactId>servlet-api</artifactId>
+  		<version>2.5</version>
+  		<scope>provided</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.apache.tiles</groupId>
+  		<artifactId>tiles-servlet-wildcard</artifactId>
+  		<version>2.2.1</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.apache.tiles</groupId>
+  		<artifactId>tiles-el</artifactId>
+  		<version>2.2.1</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework.webflow</groupId>
+  		<artifactId>spring-webflow</artifactId>
+  		<version>2.0.8.RELEASE</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework.webflow</groupId>
+  		<artifactId>spring-js</artifactId>
+  		<version>2.0.8.RELEASE</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>ognl</groupId>
+  		<artifactId>ognl</artifactId>
+  		<version>2.7.3</version>
+  	</dependency>
+  </dependencies>
+  <build>
+    <finalName>timetrack</finalName>
+    <plugins>
+    	<plugin>
+  			<!-- Start's the plugin tag for Cargo! -->
+  			<!-- Cargo Group Id -->
+  			<groupId>org.codehaus.cargo</groupId>
+	  		<!-- Cargo's Artifact Id -->
+  			<artifactId>cargo-maven2-plugin</artifactId>
+  			<!-- This the most important part of the setup -->
+  			<configuration>
+  				<!--
+					When Cargo starts the container, the following tag instructs it to
+					wait for you to kill the session with Crtl-C
+				-->
+  				<wait>true</wait>
+  				<!--
+					The following tag details the container you want to
+					deploy to.
+				-->
+  				<container>
+  					<!--
+						Specifying "tomcat6x" is very important! This one tripped me up
+						for quite a while. The issue is that instead of being an
+						identifier for you, "tomcat6x" is an identifier for Cargo that
+						you want to deploy your webapp in Tomcat 6.x. I had initially
+						thought otherwise and hence just dropped the 'x', making it
+						"tomcat6", but that never worked.
+					-->
+  					<containerId>tomcat6x</containerId>
+  					<!--
+						Type == Installed means that you want to deploy to a container
+						that's installed on your computer
+					-->
+  					<type>remote</type>
+  					<!-- The home folder for your local Tomcat -->
+  					<!-- home>${catalina.home}</home-->
+  				</container>
+  				<configuration>
+  					<!--
+						This is another one that confused me for long. Its not enough to
+						specify 'installed' in the container tag. You have to now specify
+						another configuration with type == existing and re-issue the home
+						path
+					-->
+  					<type>runtime</type>
+  					<!-- home>${catalina.home}</home-->
+  					<properties>
+  						<!-- cargo.tomcat.manager.url>${tomcat.manager.url}</cargo.tomcat.manager.url-->
+  						<cargo.remote.username>${tomcat.manager.username}</cargo.remote.username>
+  						<cargo.remote.password>${tomcat.manager.password}</cargo.remote.password>
+  						<cargo.hostname>${tomcat.hostname}</cargo.hostname>
+  						<cargo.servlet.port>${tomcat.port}</cargo.servlet.port>
+  					</properties>
+  				</configuration>
+  				<!--
+					Cargo has the notion of a 'deployer' in which you specify
+					'deployables'
+				-->
+  				<deployer>
+  					<!-- You have to again specify that the type for the deployer -->
+  					<type>remote</type>
+  					<deployables>
+  						<!-- This deployable specifies the webapp you want to deploy -->
+  						<deployable>
+  							<groupId>de.thomasfrommeld.timetrack</groupId>
+  							<artifactId>timetrack</artifactId>
+  							<type>war</type>
+  							<properties>
+  								<context>timetrack</context>
+  							</properties>
+  							
+  							<pingURL>http://${tomcat.hostname}:${tomcat.port}/timetrack/</pingURL>
+  						</deployable>
+  					</deployables>
+  				</deployer>
+  			</configuration>
+  			<!--
+				Executions specify the targets that you want to run during build
+			-->
+  			<executions>
+                <!--
+					Maven has the concept of a 'phase' which can be thought of a
+					collection of goals. Hence here we are specifying that during the
+					'install' phase first deploy the webapp to the container specific
+					folder and then start the container. Both 'deployer-deploy' and
+					'start' are cargo specific goals.
+				-->
+                <execution>
+                    <id>verify-deploy</id>
+                    <phase>install</phase>
+                    <goals>
+                    	<goal>deployer-redeploy</goal>
+                        <!-- <goal>start</goal> -->
+                    </goals>
+                </execution> 
+                <!--
+					Specifying that during the 'pre-clean' phase, Cargo should first
+					stop the container.
+				-->
+                <execution>
+                    <id>clean-undeploy</id>
+                    <phase>pre-clean</phase>
+                    <goals>
+                        <!-- <goal>deployer-undeploy</goal>  -->
+                        <!--  Only local containers can be started  
+                        <goal>stop</goal>
+                        -->
+                    </goals>
+                </execution> 
+                
+                <execution>
+                    <id>start-container</id>
+                    <phase>pre-integration-test</phase>
+                    <goals>
+                        <!-- <goal>deployer-deploy</goal> -->
+                        <!--  Only local containers can be started  
+                        <goal>start</goal>
+                        -->
+                    </goals>
+                </execution>
+                <execution>
+                    <id>stop-container</id>
+                    <phase>post-integration-test</phase>
+                    <goals>
+                        <!--  Only local containers can be started   -->
+                        <!--  <goal>deployer-undeploy</goal>
+                        <goal>stop</goal>
+                        -->
+                    </goals>
+                </execution>
+
+            </executions>
+  		</plugin>
+    </plugins>
+  </build>
+</project>

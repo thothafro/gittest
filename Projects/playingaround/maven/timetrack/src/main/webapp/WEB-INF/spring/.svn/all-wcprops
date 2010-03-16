@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/!svn/ver/1233/web/simple-tiles2-webapp/tags/1.1/src/main/webapp/WEB-INF/spring
+END
+web-application-context.xml
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/!svn/ver/1233/web/simple-tiles2-webapp/tags/1.1/src/main/webapp/WEB-INF/spring/web-application-context.xml
+END
+webmvc-context.xml
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/!svn/ver/1233/web/simple-tiles2-webapp/tags/1.1/src/main/webapp/WEB-INF/spring/webmvc-context.xml
+END

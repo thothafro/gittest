@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/mvc
+                           http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+    <mvc:view-controller path="/index.html" />
+    <mvc:view-controller path="/info/about.html" />
+    
+    <context:annotation-config />
+    
+    <context:component-scan base-package="de.thomasfrommeld.timetrack" />
+    
+    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+   
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+    <!--  bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" /-->
+    
+ 
+
+    <bean id="tilesConfigurer"
+          class="org.springframework.web.servlet.view.tiles2.TilesConfigurer"
+          p:definitions="/WEB-INF/tiles-defs/templates.xml" />
+
+	<!--  
+	<bean id="tilesViewResolver"
+		  class="org.springframework.web.servlet.view.UrlBasedViewResolver"
+		  p:viewClass="org.springframework.web.servlet.view.tiles2.TilesView" />
+	-->
+	
+	<bean id="tilesViewResolver"
+		  class="org.springframework.js.ajax.AjaxUrlBasedViewResolver"
+		  p:viewClass="org.springframework.webflow.mvc.view.FlowAjaxTilesView"
+	 />	  
+	 
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+		  
+	<!-- Used in 'create' action-state of Person Flow -->
+    <bean id="personBean" 
+          class="de.thomasfrommeld.timetrack.model.Person" 
+          scope="prototype" />
+
+</beans>
